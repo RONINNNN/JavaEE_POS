@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <title>POS</title>
+</head>
+
+
+
+
+<body>
+<header>
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+        <!-- Navbar content -->
+        <div class="container-fluid">
+            <a class="navbar-brand">
+
+                <img src="assets/img/download%20(8).png" alt="logo" width="75" height="75">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link " aria-current="page" id="customerClick">Customer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="itemClick" >Item</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="orderClick" >Order</a>
+                    </li>
+
+                </ul>
+                <form class="d-flex">
+                    <input id="txt-cus-search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button id="button-cus-search" class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+</header>
+
+<!--Customer Part-->
+
+<section id="cusSec" class="container-fluid">
+    <div
+            class="rounded-3 p-3" style="background-color: #a6b9eb; margin-top: 30px;">
+        <h1 class="text-center mb-3"><i class="bi bi-people-fill m-2"></i>Customer Form</h1>
+    </div>
+    <div class="row g-3 align-items-center pb-3 justify-content-between">
+
+        <div class="col-12 col-md-5 col-lg-4 col-xl-6">
+            <button id="cus-delete" type="button" class="btn btn-danger mt-2" data-bs-toggle="modal"
+                    data-bs-target="#removeCustomer"><i class="bi bi-person-plus-fill m-2"></i>Delete Customer
+            </button>
+            <button id="clear-btn-cus" type="button" class="btn btn-secondary mt-2"><i class="bi bi-backspace m-2"></i>Clear</button>
+            <button id="btnAddCus" type="button" class="btn btn-success mt-2" data-bs-toggle="modal"
+                    data-bs-target="#addCustomer"><i class="bi bi-person-plus-fill m-2"></i>Add Customer
+            </button>
+            <button id="btnUpdateCus" type="button" class="btn btn-warning mt-2" data-bs-toggle="modal"
+                    data-bs-target="#UpdateCustomer"><i class="bi bi-person-plus-fill m-2"></i>Update Customer
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="mb-3 col-6">
+            <label class="form-label" for="cusIdAdd">Customer Id</label>
+
+            <input type="text" class="form-control" id="cusIdAdd" placeholder="Customer Id">
+            <small id="error1">* Customer ID is a required field, Pattern C00-001</small>
+
+
+        </div>
+        <div class="mb-3 col-6">
+            <label class="form-label" for="cusNameAdd">Customer Name</label>
+            <input type="text" class="form-control" id="cusNameAdd" placeholder="Customer Name">
+            <small id="error2">* Customer Name is required field, Min 5 & Max 10</small>
+
+
+        </div>
+        <div class="mb-3 col-6">
+            <label class="form-label" for="cusAddressAdd">Customer Address</label>
+            <input type="text" class="form-control" id="cusAddressAdd" placeholder="Customer Address">
+            <small id="error3">* Customer Address is required field, Min 5</small>
+
+
+        </div>
+        <div class="mb-3 col-6">
+            <label class="form-label" for="cusSalaryAdd">Customer Salary</label>
+            <input type="text" class="form-control" id="cusSalaryAdd" placeholder="Customer Salary">
+            <small id="error4">* Customer Address is required field, Ex:500.00</small>
+
+
+        </div>
+
+    </div>
+
+    <div>
+        <div>
+            <div>
+                <table class="table table-striped table-hover table-primary" >
+                    <thead>
+                    <tr>
+                        <th scope="col">Customer Id</th>
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Customer Address</th>
+                        <th scope="col">Customer Salary</th>
+                    </tr>
+                    </thead>
+                    <tbody id="cusTblBody">
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!--Item Part-->
+
+<section id="itemSec" class="container-fluid">
+    <div
+            class="rounded-3 p-3" style="background-color: #a6b9eb; margin-top: 30px;">
+        <h1 class="text-center mb-3"><i class="bi bi-people-fill m-2"></i>Item Form</h1>
+    </div>
+    <div class="row g-3 align-items-center pb-3 justify-content-between">
+
+        <div class="col-12 col-md-5 col-lg-4 col-xl-6">
+            <button id="item-delete" type="button" class="btn btn-danger mt-2" data-bs-toggle="modal"
+                    data-bs-target="#removeItem"><i class="bi bi-person-plus-fill m-2"></i>Delete Item
+            </button>
+            <button id="clear-btn-item" type="button" class="btn btn-secondary mt-2"><i class="bi bi-backspace m-2"></i>Clear</button>
+            <button id="btnAddItem" type="button" class="btn btn-success mt-2" data-bs-toggle="modal"
+                    data-bs-target="#addItem"><i class="bi bi-person-plus-fill m-2"></i>Add Item
+            </button>
+            <button id="btnUpdateItem" type="button" class="btn btn-warning mt-2" data-bs-toggle="modal"
+                    data-bs-target="#UpdateItem"><i class="bi bi-person-plus-fill m-2"></i>Update Item
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="mb-3 col-6">
+            <label class="form-label" for="itemCode">Item Id</label>
+            <input  type="text" class="form-control" id="itemCode" placeholder="Item Id">
+
+        </div>
+        <div class="mb-3 col-6">
+            <label class="form-label" for="itemName">Item Name</label>
+            <input type="text" class="form-control" id="itemName" placeholder="Item Name">
+
+        </div>
+        <div class="mb-3 col-6">
+            <label class="form-label" for="itemQty">Item Qty</label>
+            <input type="text" class="form-control" id="itemQty" placeholder="Item Qty">
+
+        </div>
+        <div class="mb-3 col-6">
+            <label class="form-label" for="itemPrice">Item  Price</label>
+            <input type="text" class="form-control" id="itemPrice" placeholder="Item Price">
+
+        </div>
+
+    </div>
+
+    <div>
+        <div>
+            <div>
+                <table class="table table-striped table-hover table-primary" >
+                    <thead>
+                    <tr>
+                        <th scope="col">Item Id</th>
+                        <th scope="col">Item Name</th>
+                        <th scope="col">Item Qty</th>
+                        <th scope="col">Item  Price</th>
+                    </tr>
+                    </thead>
+                    <tbody id="itemTblBody">
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+<!--Oder Part-->
+
+<section id="oderSec" class="container-fluid">
+
+    <div
+            class="rounded-3 p-3" style="background-color: #a6b9eb; margin-top: 30px;">
+        <h1 class="text-center mb-3"><i class="bi bi-people-fill m-2"></i>Order Form</h1>
+    </div>
+    <div class="row g-3 align-items-center pb-3 justify-content-between">
+        <div class="row align-items-center">
+            <!-- invoice -->
+            <div class="col-12 col-lg-4">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header justify-content-center bg-warning">
+                            <h4 class="modal-title fw-bold">Invoice Details</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col">
+                                    <label for="oId" class="form-label fw-bold">Order ID:</label>
+                                    <input type="text" class="form-control" id="oId" placeholder="">
+                                </div>
+                                <div class="col">
+                                    <label for="iDate" class="form-label fw-bold">Date:</label>
+                                    <input type="date" class="form-control" id="iDate">
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <label for="idCmb1" class="form-label fw-bold">Customer ID:</label>
+                                    <select class="form-select" id="idCmb1">
+
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label for="cusName" class="form-label fw-bold">Customer Name:</label>
+                                    <input type="text" class="form-control" id="cusName" placeholder="">
+                                </div>
+                            </div>
+                            <div class="row mt-3 mb-3">
+                                <div class="col">
+                                    <label for="salary" class="form-label fw-bold">Salary:</label>
+                                    <input type="text" class="form-control" id="salary" placeholder="">
+                                </div>
+                                <div class="col">
+                                    <label for="address" class="form-label fw-bold">Address:</label>
+                                    <input type="text" class="form-control" id="address" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Item Select -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header justify-content-center bg-warning">
+                            <h4 class="modal-title fw-bold">Item Select</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col">
+                                    <label for="idCmb2" class="form-label fw-bold">Item:</label>
+                                    <select class="form-select" id="idCmb2">
+
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label for="itemName" class="form-label fw-bold">Item Name:</label>
+                                    <input type="text" class="form-control" id="Order-itemName" placeholder="">
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+
+                                <div class="col">
+                                    <label for="qtyOnHand" class="form-label fw-bold">Qty On Hand:</label>
+                                    <input type="number" class="form-control" id="qtyOnHand" placeholder="">
+                                </div>
+                                <div class="col">
+                                    <label for="price" class="form-label fw-bold">Price:</label>
+                                    <input type="text" class="form-control" id="price" placeholder="">
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <label for="oQty" class="form-label fw-bold">Order Quantity:</label>
+                                    <input type="number" class="form-control" id="oQty" placeholder="">
+                                </div>
+                            </div>
+                            <div class="row mt-3 mb-1">
+                                <button id="btnAddToCart" type="button" class="btn btn-primary">Add Item</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Total Select -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <p class="h2 d-inline">
+                                        Total :
+                                    </p>
+                                    <p id="lblFullTotal" class="h2 d-inline">
+
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col">
+                                    <p class="h2 d-inline">
+                                        SubTotal :
+                                    </p>
+                                    <p id="lblSubTotal" class="h2 d-inline">
+
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+
+                                <div class="col">
+                                    <label for="cash" class="form-label fw-bold">Cash:</label>
+                                    <input type="text" class="form-control" id="cash" placeholder="">
+                                </div>
+                                <div class="col">
+                                    <label for="dis" class="form-label fw-bold">Discount:</label>
+                                    <input type="number" class="form-control" id="dis" placeholder="">
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+
+                                <div class="col">
+                                    <label for="balance" class="form-label fw-bold">Balance:</label>
+                                    <input type="text" class="form-control" id="balance" placeholder="">
+                                </div>
+                            </div>
+                            <div class="row mt-3 mb-1">
+                                <button id="btnPurchase" type="button" class="btn btn-success">Purchase</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="table-responsive" style="height: 40vh;">
+                <table class="table table-striped">
+                    <thead class="" style="background-color: #f39c12;">
+                    <tr>
+                        <th>Item Code</th>
+                        <th>Item Name</th>
+                        <th>Price</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbodyOrder">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>>
+</section>
+
+
+
+<script src="assets/bootstrap/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+
+<script src="assets/js/script.js">
+</script>
+<script src="assets/jQuery/jquery-3.6.0.min.js"></script>
+
+<script src="db/DB.js"> </script>
+<script src="controller/CustomerController.js"></script>
+<script src="model/CustomerDTO.js"></script>
+<script src="controller/ItemController.js"></script>
+<script src="model/ItemDTO.js"></script>
+<script src="controller/OrderController.js"></script>
+<script src="model/OrderDTO.js"></script>
+<script src="model/OrderDetailDTO.js"></script>
+</body>
+</html>
