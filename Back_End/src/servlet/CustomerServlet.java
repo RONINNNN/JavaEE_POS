@@ -28,6 +28,7 @@ public class CustomerServlet extends HttpServlet {
         JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
         JsonObjectBuilder response = Json.createObjectBuilder();
+        JsonObjectBuilder dataMsgBuilder = Json.createObjectBuilder();
         PrintWriter writer = resp.getWriter();
         Connection connection =null;
         try {
@@ -55,6 +56,27 @@ public class CustomerServlet extends HttpServlet {
                     response.add("data",arrayBuilder.build());
 
                     writer.print(response.build());
+
+                    break;
+                case "GenId":
+                    ResultSet resultSet = connection.prepareStatement("SELECT id FROM customer ORDER BY id DESC LIMIT 1").executeQuery();
+                    if (resultSet.next()) {
+                        int tempId = Integer.parseInt(resultSet.getString(1).split("-")[1]);
+                        tempId+=1;
+                        if (tempId < 10) {
+                            objectBuilder.add("id", "C00-00" + tempId);
+                        } else if (tempId < 100) {
+                            objectBuilder.add("id", "C00-0" + tempId);
+                        } else if (tempId < 1000) {
+                            objectBuilder.add("id", "C00-" + tempId);
+                        }
+                    }else{
+                        objectBuilder.add("id", "C00-000");
+                    }
+                    dataMsgBuilder.add("data",objectBuilder.build());
+                    dataMsgBuilder.add("message","Done");
+                    dataMsgBuilder.add("status",200);
+                    writer.print(dataMsgBuilder.build());
 
                     break;
 
@@ -120,6 +142,43 @@ public class CustomerServlet extends HttpServlet {
             }
         }
 
+    }
+
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("application/json");
+        String customerID = req.getParameter("customerID");
+        /*System.out.println("cus : " + " " + customerID);*/
+        JsonObjectBuilder dataMsgBuilder = Json.createObjectBuilder();
+        PrintWriter writer = resp.getWriter();
+
+        Connection connection = null;
+        try {
+            connection = ds.getConnection();
+            PreparedStatement pstm = connection.prepareStatement("DELETE FROM customer WHERE id=?");
+            pstm.setObject(1, customerID);
+
+            if (pstm.executeUpdate() > 0) {
+                resp.setStatus(HttpServletResponse.SC_OK); //200
+                dataMsgBuilder.add("data", "");
+                dataMsgBuilder.add("massage", "Customer Deleted");
+                dataMsgBuilder.add("status", "200");
+                writer.print(dataMsgBuilder.build());
+            }
+        } catch (SQLException e) {
+            dataMsgBuilder.add("status", 400);
+            dataMsgBuilder.add("message", "Error");
+            dataMsgBuilder.add("data", e.getLocalizedMessage());
+            writer.print(dataMsgBuilder.build());
+            resp.setStatus(HttpServletResponse.SC_OK); //200
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 
