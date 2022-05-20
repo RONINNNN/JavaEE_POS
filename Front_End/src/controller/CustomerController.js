@@ -87,13 +87,13 @@ function loadAllCustomers() {
             for (const customer of resp.data){
                 let nRow =
                     "<tr><td>" +
-                    customerDB[i].getCustomerID() +
+                    customer.id +
                     "</td><td>" +
-                    customerDB[i].getCustomerName() +
+                    customer.name +
                     "</td><td>" +
-                    customerDB[i].getCustomerAddress() +
+                    customer.address +
                     "</td><td>" +
-                    customerDB[i].getCustomerSalary() +
+                    customer.salary +
                     "</td></tr>";
 
                 $("#cusTblBody").append(nRow);
@@ -201,7 +201,26 @@ function deleteCustomer() {
 //Update Customer Function - End
 
 $("#btnUpdateCus").click(function () {
-    let custId = $("#cusIdAdd").val();
+    var cusOb = {
+        id: $("#Id").val(),
+        name: $("#Name").val(),
+        address: $("#Address").val(),
+        salary: $("#customerSalary").val()
+    }
+
+    $.ajax({
+        url: "http://localhost:8080/BackEnd/customer", method: "PUT", // contentType: "application/json",
+        data: JSON.stringify(cusOb), success: function (resp) {
+            if (resp.status == 200) {
+                addDataToTable();
+                clearField();   //Clear Input Fields
+            } else if (resp.status == 400) {
+                alert(resp.data);
+            }
+        }
+    });
+
+   /* let custId = $("#cusIdAdd").val();
     let custName = $("#cusNameAdd").val();
     let custAddress = $("#cusAddressAdd").val();
     let custSalary = $("#cusSalaryAdd").val();
@@ -215,7 +234,7 @@ $("#btnUpdateCus").click(function () {
     }
     loadAllCustomers();
     clearFields()   //Clear Input Fields
-});
+});*/
 
 function generateId() {
     let index = customerDB.length - 1;
@@ -245,4 +264,5 @@ function disableEdit() {
 function clearFields() {
     $("#cusNameAdd,#cusAddressAdd,#cusSalaryAdd,#txt-cus-search").val("");    // Clear input Fields (Add)
 
+}
 }
