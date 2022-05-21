@@ -22,7 +22,6 @@ validation(RegExCusSalary, '#cusSalaryAdd', '#error4', "#btnAddCus", '#btnAddCus
 
 
 generateId();   //Generate New Customer ID
-addCustomer(); //Add New Customer
 loadAllCustomers(); //load all customers
 clearSearch(); //Clear Search and Refresh table
 disableEdit();  //Prevent Editing Customer ID
@@ -53,10 +52,31 @@ function validation(regEx, id, error, nextId, btn) {
 // Customer Validation Function - End
 
 // Customer Add Function - Start
-function addCustomer() {
 
     $("#btnAddCus").click(function () {
+       // console.log( $("#customerForm").serialize())
+        $.ajax({
+            url:"http://localhost:8080/JavaEE/customer",
+            method: "POST",data: $("#cusForm").serialize(),
+            success: function (resp) {
+                if (resp.status == 200) {
+                    clearFields();
+                    loadAllCustomers();
+                    generateId();
+                    loadAllCustomerIds();
+                } else {
+                    alert(resp.data)
+                }
+            },
+            error: function (ob, textStatus, error) {
+                console.log(ob);
+                console.log(textStatus);
+                console.log(error);
+            }
 
+
+        });
+/*
         let custId = $("#cusIdAdd").val();
         let custName = $("#cusNameAdd").val();
         let custAddress = $("#cusAddressAdd").val();
@@ -69,9 +89,9 @@ function addCustomer() {
         loadAllCustomers(); //load all customers
         clearFields()   //Clear Input Fields
         generateId();
-        loadAllCustomerIds();
+        loadAllCustomerIds();*/
     });
-}
+
 
 // Customer Add Function - End
 
@@ -191,11 +211,11 @@ function deleteCustomer() {
     $("#cus-delete").click(function (){
         let getClickData=$("#cusIdAdd").val();
         $.ajax({
-            url:`http://localhost:8080/BackEnd/customer?customerID=${getClickData}`,
+            url:`http://localhost:8080/JavaEE/customer?customerID=${getClickData}`,
         method:"DELETE",
             success:function (resp){
             if (resp.status==200){
-                addDataToTable();
+                loadAllCustomers();
             }else{
                 alert(resp.data);
             }
@@ -235,7 +255,7 @@ $("#btnUpdateCus").click(function () {
     }
 
     $.ajax({
-        url: "http://localhost:8080/BackEnd/customer", method: "PUT", // contentType: "application/json",
+        url: "http://localhost:8080/JavaEE/customer", method: "PUT", // contentType: "application/json",
         data: JSON.stringify(cusOb), success: function (resp) {
             if (resp.status == 200) {
                 addDataToTable();
@@ -264,7 +284,7 @@ $("#btnUpdateCus").click(function () {
 
     function generateId() {
         $.ajax({
-            url:"http://localhost:8080/BackEnd/customer?option=GenId",
+            url:"http://localhost:8080/JavaEE/customer?option=GenId",
             method:"GET",
             success:function (resp){
                 if (resp.status==200){
